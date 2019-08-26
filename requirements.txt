@@ -1,0 +1,2 @@
+aiorcon==0.6.8
+prometheus_client==0.7.1
