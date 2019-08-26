@@ -3,6 +3,7 @@ import asyncio
 
 from prom import Exporter
 
+from prometheus_async.aio.web import start_http_server
 
 if __name__ == '__main__':
     # Configuration parameters
@@ -15,12 +16,8 @@ if __name__ == '__main__':
     RCON_TIMEOUT = int(os.getenv("MINECRAFT_RCON_TIMEOUT", 5))
 
     IS_FORGE = bool(os.getenv("MINECRAFT_FORGE", False))
-
-    loop = asyncio.get_event_loop()
-    #try:
-    exp = Exporter(EXPORTER_PORT, EXPORTER_INTERVAL, IS_FORGE)
-    loop.run_until_complete(exp.run(RCON_HOST, RCON_PORT, RCON_PASSWORD, RCON_TIMEOUT))
-    #except Exception as e:
-    #    print(e)
-    #finally:
-    #    loop.close()
+    
+    print("Starting Prometheus Exporter on Port {}".format(EXPORTER_PORT))
+    asyncio.ensure_future(start_http_server(port=EXPORTER_PORT))
+    exp = Exporter(EXPORTER_INTERVAL, IS_FORGE)
+    asyncio.run(exp.run(RCON_HOST, RCON_PORT, RCON_PASSWORD, RCON_TIMEOUT))
