@@ -6,9 +6,6 @@ from aiorcon.rcon import RCON
 RE_TPS = re.compile(r'(?:Dim\s*(?P<dim>[-\d]+) \((?P<sdim>[^)]+).*?|Overall.*?)time: (?P<mean>[\d\.]+).*?TPS: (?P<tick>[\d\.]+)')
 RE_LIST = re.compile(r'There are (?P<count>\d+)')
 
-def reconnect_cb(*args):
-    print("Lost RCON connection. Reconnecting")
-
 
 class Connector:
     async def connect(self, host, port, password, timeout=5, forge=True):
@@ -18,10 +15,15 @@ class Connector:
             timeout=timeout,
             auto_reconnect_attempts=3,
             auto_reconnect_delay=5,
-            auto_reconnect_cb=reconnect_cb,
+            auto_reconnect_cb=self.reconnect_cb,
             multiple_packet=False)
         self.forge = forge
         print("Initialized RCON connection")
+
+
+    def reconnect_cb(*args):
+        print("Lost RCON connection. Reconnecting")
+
 
     def close(self):
         self.rcon.close()
