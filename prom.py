@@ -31,7 +31,7 @@ class Exporter:
         print("Starting exporter routine")
         while True:
             print("Updating data")
-            self.online.set(await con.get_online())
+            self.online.set(await con.get_list())
             self.whitelist.set(await con.get_whitelist())
             self.banlist.set(await con.get_banlist())
             if self.forge:

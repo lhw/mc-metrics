@@ -20,30 +20,20 @@ class Connector:
         self.forge = forge
         print("Initialized RCON connection")
 
-
     def reconnect_cb(*args):
         print("Lost RCON connection. Reconnecting")
-
 
     def close(self):
         self.rcon.close()
 
     async def get_whitelist(self):
-        resp = await self.rcon('whitelist list')
-        try:
-            return int(RE_LIST.search(resp).group('count'))
-        except:
-            return 0
+        return await self.get_list("whitelist ")
 
     async def get_banlist(self):
-        resp = await self.rcon('banlist list')
-        try:
-            return int(RE_LIST.search(resp).group('count'))
-        except:
-            return 0
+        return await self.get_list("banlist ")
 
-    async def get_online(self):
-        resp = await self.rcon('list')
+    async def get_list(self, type="")
+        resp = await self.rcon(f'{type}list')
         try:
             return int(RE_LIST.search(resp).group('count'))
         except:
