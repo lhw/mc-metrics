@@ -40,10 +40,4 @@ class Exporter:
                     self.mean.labels(k[0], k[1]).set(v["mean"])
                     self.tps.labels(k[0], k[1]).set(v["tick"])
             print("Data update finished")
-            if self.cancelled:
-                break
-            else:
-                await asyncio.sleep(self.interval)
-
-    def cancel(self):
-        self.cancelled = True
+            await asyncio.sleep(self.interval)

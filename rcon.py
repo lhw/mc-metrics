@@ -23,9 +23,6 @@ class Connector:
     def reconnect_cb(*args):
         print("Lost RCON connection. Reconnecting")
 
-    def close(self):
-        self.rcon.close()
-
     async def get_whitelist(self):
         return await self.get_list("whitelist ")
 
@@ -33,7 +30,7 @@ class Connector:
         return await self.get_list("banlist ")
 
     async def get_list(self, type="")
-        resp = await self.rcon(f'{type}list')
+        resp = await self.rcon(f"{type}list")
         try:
             return int(RE_LIST.search(resp).group('count'))
         except:
