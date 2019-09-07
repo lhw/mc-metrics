@@ -1,5 +1,6 @@
 # mc-metrics
 ## Prometheus Exporter for Minecraft servers
+[![Docker Repository on Quay](https://quay.io/repository/lhw/mc-metrics/status "Docker Repository on Quay")](https://quay.io/repository/lhw/mc-metrics)
 
 This small script exports some minimal information from a Minecraft server with RCON enabled as Prometheus metrics.
 Depending on if Forge is available on the server this can be useful for watching performance metrics. If Forge is not available
