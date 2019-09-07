@@ -17,8 +17,8 @@ class Exporter:
         self.whitelist = Gauge('minecraft_whitelist_players', 'Whitelisted Players')
         self.banlist = Gauge('minecraft_banlist_players', 'Blacklisted Players')
         if forge:
-            self.mean = Gauge('minecraft_mean_tick_time', 'Mean Tick Time', ['sdim', 'dim'])
-            self.tps = Gauge('minecraft_mean_tps', 'Mean Ticks Per Second', ['sdim', 'dim'])
+            self.mean = Gauge('minecraft_mean_tick_time', 'Mean Tick Time', ['dim', 'sdim'])
+            self.tps = Gauge('minecraft_mean_tps', 'Mean Ticks Per Second', ['dim', 'sdim'])
 
     async def start_web(self, port):
         print("Starting Prometheus Exporter on Port {}".format(port))
