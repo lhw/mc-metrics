@@ -4,8 +4,7 @@ import re
 from aiorcon.rcon import RCON
 
 RE_TPS = re.compile(r'(?:Dim\s*(?P<dim>[-\d]+) \((?P<sdim>[^)]+).*?|Overall.*?)time: (?P<mean>[\d\.]+).*?TPS: (?P<tick>[\d\.]+)')
-RE_ONLINE = re.compile(r'There are (?P<online>\d)')
-
+RE_LIST = re.compile(r'There are (?P<count>\d+)')
 
 def reconnect_cb(*args):
     print("Lost RCON connection. Reconnecting")
@@ -27,10 +26,24 @@ class Connector:
     def close(self):
         self.rcon.close()
 
+    async def get_whitelist(self):
+        resp = await self.rcon('whitelist list')
+        try:
+            return int(RE_LIST.search(resp).group('count'))
+        except:
+            return 0
+
+    async def get_banlist(self):
+        resp = await self.rcon('banlist list')
+        try:
+            return int(RE_LIST.search(resp).group('count'))
+        except:
+            return 0
+
     async def get_online(self):
         resp = await self.rcon('list')
         try:
-            return int(RE_ONLINE.search(resp).group('online'))
+            return int(RE_LIST.search(resp).group('count'))
         except:
             return 0
 
