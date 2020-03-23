@@ -1,10 +1,9 @@
-FROM alpine:3.10
+FROM python:3.7-alpine
 MAINTAINER Lennart Weller <lhw@ring0.de>
 
 COPY . /app/
 WORKDIR /app
-RUN apk add --no-cache python3 py3-pip\
-    && pip3 install -r requirements.txt
+RUN pip3 install -r requirements.txt
 
 USER guest
 
